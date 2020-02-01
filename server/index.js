@@ -92,7 +92,7 @@ app.get('/api/user/logout', auth, (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.json({ Hi: "Hello" });
+    res.json({ Hello: "Hi" });
 });
 
 const port = process.env.PORT || 5000;
