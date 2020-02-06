@@ -12,6 +12,7 @@ mongoose.connect(config.mongoURI,
     { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log("DB connected"))
     .catch(err => {
+        console.log("DB NOT connected");
         console.error(err);
     });
 
@@ -19,8 +20,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-// GET /api/user/auth 
-app.get('/api/user/auth', auth, (req, res) => {
+// GET /api/users/auth 
+app.get('/api/users/auth', auth, (req, res) => {
     console.log(req.user);
     res.status(200).json({
         _id: req._id,
@@ -47,7 +48,7 @@ app.post('/api/users/register', (req, res) => {
 });
 
 // POST /api/user/login
-app.post('/api/user/login', (req, res) => {
+app.post('/api/users/login', (req, res) => {
     // Email에 해당하는 user를 찾고, 이를 callback함수의 user로 전달 
     User.findOne({ email: req.body.email }, (err, user) => {
         // Email에 해당하는 user가 없다면 false 리턴 
@@ -81,7 +82,7 @@ app.post('/api/user/login', (req, res) => {
     });
 });
 
-app.get('/api/user/logout', auth, (req, res) => {
+app.get('/api/users/logout', auth, (req, res) => {
     User.findOneAndUpdate({ _id: req.user._id, }, { token: "" }, (err, doc) => {
         if (err)
             return res.json({ success: false, err });
