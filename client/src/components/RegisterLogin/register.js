@@ -13,7 +13,7 @@ export class Register extends Component {
     };
 
     displayErrors = errors => {
-        return errors.map((error, i) => <p key={i}>{error}</p>);
+        return errors.map((error, i) => <p key={i}>{error.message}</p>);
     }
 
     handleChange = event => {
@@ -76,8 +76,8 @@ export class Register extends Component {
                         this.props.history.push('/login');
                     } else {
                         this.setState({
-                            errors: this.state.errors.concat("your attempt to send data to DB was failed");
-                        })
+                            errors: this.state.errors.concat("your attempt to send data to DB was failed")
+                        });
                     }
                 })
                 .catch(err => {
@@ -87,6 +87,7 @@ export class Register extends Component {
                 });
         } else {
             console.error("Form is not valid");
+            console.log(this.state);
         }
     };
 
